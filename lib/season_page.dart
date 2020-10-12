@@ -23,7 +23,6 @@ class SeasonPageState extends State<SeasonPage> {
   }
 
   Widget _buildRow(item) {
-    print("circuit ${item['Circuit']}");
     DateTime date;
     if (item['time'] != null) {
       date = DateTime.parse("${item['date']} ${item['time']}").toLocal();
@@ -68,7 +67,6 @@ class SeasonPageState extends State<SeasonPage> {
 
   Widget build(BuildContext context) {
    final displayData = widget.displayData;
-   // print(displayData);
     return Scaffold(
       appBar: AppBar(
         title: Text("${displayData['season']} Formula 1 season"),

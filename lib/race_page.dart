@@ -31,13 +31,10 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
     var data = widget.displayData;
     http.Response response = await http.get("http://ergast.com/api/f1/${data['season']}/${data['round']}/results.json");
     var responseData = jsonDecode(response.body);
-    print(responseData['MRData']['RaceTable']['Races'][0]['Results']);
     return responseData['MRData']['RaceTable']['Races'][0]['Results'];
   }
 
   Widget _buildResultList(dataSet) {
-    print(dataSet[0]);
-    print(dataSet[0].keys);
     List<TableRow> rows = [
       TableRow(
         children: <Widget>[

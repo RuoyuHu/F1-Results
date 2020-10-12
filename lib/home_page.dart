@@ -33,15 +33,24 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text('API Data Display')
-        ),
-        body: Center(
-            child: RaisedButton(
-              child: Text('Get Data'),
-              onPressed: _fetchAndGotoDataPage,
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+          title: Text('API Data Display')
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("images/homebg.jpg")
             )
+        ),
+        child: Center(
+          child: RaisedButton(
+            child: Text('Get Data'),
+            onPressed: _fetchAndGotoDataPage,
+          )
         )
+      )
     );
   }
 }
