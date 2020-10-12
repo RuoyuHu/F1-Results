@@ -14,7 +14,7 @@ class SeasonPage extends StatefulWidget {
 
 class SeasonPageState extends State<SeasonPage> {
 
-  void gotoRacePage(raceData) {
+  void _gotoRacePage(raceData) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -23,7 +23,7 @@ class SeasonPageState extends State<SeasonPage> {
   }
 
   Widget _buildRow(item) {
-    // print("item ${item}");
+    print("circuit ${item['Circuit']}");
     DateTime date;
     if (item['time'] != null) {
       date = DateTime.parse("${item['date']} ${item['time']}").toLocal();
@@ -32,7 +32,7 @@ class SeasonPageState extends State<SeasonPage> {
     }
     return Card(
       child: ListTile(
-        onTap: () => gotoRacePage(item),
+        onTap: () => _gotoRacePage(item),
         leading: Text(
           item['round'],
           style: TextStyle(fontSize: 25),

@@ -52,6 +52,12 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
     ];
     for (int i = 0; i < dataSet.length; i++) {
       var result = dataSet[i];
+      var status = result['positionText'];
+      if (status == "R") {
+        status = "DNF";
+      } else if (status == "W") {
+        status = "DNS";
+      }
       rows.add(
         TableRow(
           decoration: BoxDecoration(
@@ -62,7 +68,7 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
                 )
           ),
           children: <Widget>[
-            Text("\n${result['positionText']}"),
+            Text("\n${status}"),
             Text(((result['Driver']['code']!= null)?"${result['Driver']['code']}":"")
                 +"\n${result['Driver']['givenName']}\n${result['Driver']['familyName']}"),
             Text("\n${result['number']}"),
@@ -98,10 +104,15 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
           )
       );
     }
-    return SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
+    return Container(
+          padding: EdgeInsets.only(
+            top: 20,
+            left: 20,
+            right: 20
+          ),
+          child:
+          SingleChildScrollView(
+          child: Wrap(
             children: <Widget>[
               FutureBuilder<List<dynamic>>(
                 future: raceResult,
@@ -148,8 +159,12 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
                 controller: _tabController,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20
+                    ),
+                    child: Wrap(
                       children: <Widget>[
                         Align(
                           alignment: Alignment.centerLeft,
@@ -169,13 +184,16 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
                             child: Text("\nWikipedia:\n${data['url']}"),
                             onTap: () => launch(data['url']),
                           ),
+                        ),
+                        Center(
+                          child: Image(
+                              image: AssetImage("images/${data['Circuit']['circuitId']}.png")
+                          )
                         )
                       ],
                     )
                   ),
-                  Container(
-                    child: _raceResultBuilder(isPast, date, hasTime)
-                  )
+                  _raceResultBuilder(isPast, date, hasTime)
                 ]
               )
             )

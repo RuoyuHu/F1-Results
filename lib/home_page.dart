@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   void _fetchAndGotoDataPage() async {
     http.Response response = await http.get(
-      // Uri.encodeFull("https://jsonplaceholder.typicode.com/posts"),
         Uri.encodeFull("http://ergast.com/api/f1/seasons.json?limit=100"),
         headers: {
           "Accept": "application/json",
