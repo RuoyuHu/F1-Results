@@ -35,7 +35,7 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-          title: Text('API Data Display')
+          title: Text('Formula 1 Results Display')
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -45,8 +45,12 @@ class HomePageState extends State<HomePage> {
             )
         ),
         child: Center(
-          child: RaisedButton(
+          child: MaterialButton(
+            color: Colors.blue,
+            textColor: Colors.white,
             child: Text('Get Data'),
+            padding: EdgeInsets.all(30),
+            shape: CircleBorder(),
             onPressed: _fetchAndGotoDataPage,
           )
         )

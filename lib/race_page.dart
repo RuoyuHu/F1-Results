@@ -28,10 +28,13 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
   }
 
   Future<List<dynamic>> fetchRaceResult() async {
-    var data = widget.displayData;
+    final data = widget.displayData;
     http.Response response = await http.get("http://ergast.com/api/f1/${data['season']}/${data['round']}/results.json");
-    var responseData = jsonDecode(response.body);
-    return responseData['MRData']['RaceTable']['Races'][0]['Results'];
+    final responseData = jsonDecode(response.body)['MRData']['RaceTable']['Races'];
+    if (responseData.length > 0) {
+      return responseData[0]['Results'];
+    }
+    return null;
   }
 
   Widget _buildResultList(dataSet) {
