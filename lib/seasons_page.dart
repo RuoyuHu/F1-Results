@@ -8,15 +8,34 @@ import 'package:first_flutter_test/common.dart' as common;
 
 
 class SeasonsPage extends StatefulWidget {
-  final displayData;
-
-  SeasonsPage({this.displayData});
-
   @override
   SeasonsPageState createState() => new SeasonsPageState();
 }
 
 class SeasonsPageState extends State<SeasonsPage> {
+  List<dynamic> displayData;
+
+  @override
+  void initState() {
+    _fetchSeasonsData();
+    super.initState();
+  }
+
+  void _fetchSeasonsData() async {
+    http.Response response = await http.get(
+        Uri.encodeFull("http://ergast.com/api/f1/seasons.json?limit=100"),
+        headers: {
+          "Accept": "application/json",
+          //   "key": ""
+        }
+    );
+
+    var responseData = jsonDecode(response.body);
+    setState(() {
+      displayData = responseData['MRData']['SeasonTable']['Seasons'].reversed.toList();
+    });
+  }
+
   void _fetchAndGotoSeasonPage(season) async {
     http.Response response = await http.get(
         Uri.encodeFull("http://ergast.com/api/f1/${season}.json"),
@@ -39,10 +58,13 @@ class SeasonsPageState extends State<SeasonsPage> {
   Widget _buildRow(item) {
     var season = item['season'];
     return Card(
+      color: Colors.black54,
       child: ListTile(
         title: Text(
           "${season} season",
-          style: common.BIGGER_FONT,
+          style: TextStyle(
+            color: Colors.white60
+          ),
         ),
         onTap: () => _fetchAndGotoSeasonPage(season),
       ),
@@ -52,11 +74,11 @@ class SeasonsPageState extends State<SeasonsPage> {
   Widget _buildDataDisplay() {
     return ListView.builder(
         padding: const EdgeInsets.all(5.0),
-        itemCount: widget.displayData.length * 2,
+        itemCount: displayData.length * 2,
         itemBuilder: (context, i) {
-          if (i.isOdd) return Divider();
+          if (i.isOdd) return Divider(color: Colors.white,);
           final index = i ~/ 2;
-          return _buildRow(widget.displayData[index]);
+          return _buildRow(displayData[index]);
         }
     );
   }
@@ -67,7 +89,17 @@ class SeasonsPageState extends State<SeasonsPage> {
         appBar: AppBar(
             title: Text("Seasons")
         ),
-        body: _buildDataDisplay()
+        body: (displayData != null)
+            ? Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("images/homebg1.jpg")
+                )
+            ),
+            child: _buildDataDisplay()
+        )
+            : Center(child: CircularProgressIndicator())
     );
   }
 }

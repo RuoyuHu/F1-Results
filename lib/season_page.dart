@@ -30,6 +30,7 @@ class SeasonPageState extends State<SeasonPage> {
       date = DateTime.parse("${item['date']}").toLocal();
     }
     return Card(
+      color: Colors.black54,
       child: ListTile(
         onTap: () => _gotoRacePage(item),
         leading: Text(
@@ -54,7 +55,14 @@ class SeasonPageState extends State<SeasonPage> {
   }
 
   Widget _buildRaceDisplay(displayData) {
-    return ListView.builder(
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage("images/homebg3.jpg")
+            )
+        ),
+        child: ListView.builder(
         padding: const EdgeInsets.all(5.0),
         itemCount: displayData.length * 2,
         itemBuilder: (context, i) {
@@ -62,6 +70,7 @@ class SeasonPageState extends State<SeasonPage> {
           final index = i ~/ 2;
           return _buildRow(displayData[index]);
         }
+      )
     );
   }
 

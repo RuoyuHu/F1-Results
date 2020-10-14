@@ -7,5 +7,6 @@ Seriously, huge thanks to the guys at Ergast, go check them out if you're intere
 ## Disclaimer
 
 I do not own any of the data displayed in the application, that's all obtained from Ergast Developer API as mentioned above.
+I do not own any of the photographs used in this application, all rights belong to their respective owners.
 
 I am a fan of F1 and produced this application for personal use so that I can view historic F1 race results.

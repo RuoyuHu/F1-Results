@@ -146,6 +146,12 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
               title: Text("${data['season']} ${data['raceName']}"),
               pinned: true,
               expandedHeight: 200,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image(
+                  fit: BoxFit.cover,
+                  image: AssetImage('images/circuitimage/${data['Circuit']['circuitId']}.jpg')
+                ),
+              ),
               bottom: TabBar(
                 tabs: [
                   Tab(text: 'Description'),
@@ -187,7 +193,7 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
                         ),
                         Center(
                           child: Image(
-                              image: AssetImage("images/${data['Circuit']['circuitId']}.png")
+                              image: AssetImage("images/circuitmaps/${data['Circuit']['circuitId']}.png")
                           )
                         )
                       ],
