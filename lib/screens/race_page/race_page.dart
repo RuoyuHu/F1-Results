@@ -68,7 +68,7 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
                 )
           ),
           children: <Widget>[
-            Text("\n${status}"),
+            Text("\n$status"),
             Text(((result['Driver']['code']!= null)?"${result['Driver']['code']}":"")
                 +"\n${result['Driver']['givenName']}\n${result['Driver']['familyName']}"),
             Text("\n${result['number']}"),
@@ -105,25 +105,20 @@ class RacePageState extends State<RacePage> with SingleTickerProviderStateMixin 
       );
     }
     return Container(
-          padding: EdgeInsets.only(
-            top: 20,
-            left: 20,
-            right: 20
-          ),
-          child:
-          SingleChildScrollView(
-          child: Wrap(
-            children: <Widget>[
-              FutureBuilder<List<dynamic>>(
-                future: raceResult,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return _buildResultList(snapshot.data);
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(20),
+            child: Wrap(
+              children: <Widget>[
+                FutureBuilder<List<dynamic>>(
+                  future: raceResult,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return _buildResultList(snapshot.data);
+                    }
+                    return CircularProgressIndicator();
                   }
-                  return CircularProgressIndicator();
-                }
-            )
-            ])));
+              )
+              ])));
   }
 
   @override

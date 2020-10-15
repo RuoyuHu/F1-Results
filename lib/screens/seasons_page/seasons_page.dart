@@ -1,4 +1,4 @@
-import 'package:first_flutter_test/season_page.dart';
+import 'package:first_flutter_test/screens/season_page/season_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,13 +32,14 @@ class SeasonsPageState extends State<SeasonsPage> {
 
     var responseData = jsonDecode(response.body);
     setState(() {
-      displayData = responseData['MRData']['SeasonTable']['Seasons'].reversed.toList();
+      displayData =
+          responseData['MRData']['SeasonTable']['Seasons'].reversed.toList();
     });
   }
 
   void _fetchAndGotoSeasonPage(season) async {
     http.Response response = await http.get(
-        Uri.encodeFull("http://ergast.com/api/f1/${season}.json"),
+        Uri.encodeFull("http://ergast.com/api/f1/$season.json"),
         headers: {
           "Accept": "application/json",
         }
@@ -61,10 +62,7 @@ class SeasonsPageState extends State<SeasonsPage> {
       color: Colors.black54,
       child: ListTile(
         title: Text(
-          "${season} season",
-          style: TextStyle(
-            color: Colors.white60
-          ),
+          "$season season",
         ),
         onTap: () => _fetchAndGotoSeasonPage(season),
       ),
@@ -72,7 +70,7 @@ class SeasonsPageState extends State<SeasonsPage> {
   }
 
   Widget _buildDataDisplay() {
-    return ListView.builder(
+    return Scrollbar(child: ListView.builder(
         padding: const EdgeInsets.all(5.0),
         itemCount: displayData.length * 2,
         itemBuilder: (context, i) {
@@ -80,6 +78,7 @@ class SeasonsPageState extends State<SeasonsPage> {
           final index = i ~/ 2;
           return _buildRow(displayData[index]);
         }
+    )
     );
   }
 

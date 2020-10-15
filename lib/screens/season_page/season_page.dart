@@ -1,7 +1,9 @@
+import 'package:first_flutter_test/screens/season_page/season_wcc_page.dart';
+import 'package:first_flutter_test/screens/season_page/season_wdc_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:first_flutter_test/race_page.dart';
+import 'package:first_flutter_test/screens/race_page/race_page.dart';
 
 class SeasonPage extends StatefulWidget {
   final displayData;
@@ -12,7 +14,14 @@ class SeasonPage extends StatefulWidget {
   SeasonPageState createState() => new SeasonPageState();
 }
 
-class SeasonPageState extends State<SeasonPage> {
+class SeasonPageState extends State<SeasonPage> with SingleTickerProviderStateMixin {
+  TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(vsync: this, length: 3);
+  }
 
   void _gotoRacePage(raceData) {
     Navigator.push(
@@ -29,6 +38,7 @@ class SeasonPageState extends State<SeasonPage> {
     } else {
       date = DateTime.parse("${item['date']}").toLocal();
     }
+
     return Card(
       color: Colors.black54,
       child: ListTile(
@@ -76,11 +86,26 @@ class SeasonPageState extends State<SeasonPage> {
 
   Widget build(BuildContext context) {
    final displayData = widget.displayData;
-    return Scaffold(
+   return Scaffold(
       appBar: AppBar(
         title: Text("${displayData['season']} Formula 1 season"),
+        bottom: TabBar(
+          tabs: [
+            Tab(text: 'Races'),
+            Tab(text: 'Drivers'),
+            Tab(text: 'Constructors')
+          ],
+          controller: tabController,
+        ),
       ),
-      body: _buildRaceDisplay(displayData['Races']),
+      body: TabBarView(
+        controller: tabController,
+        children: <Widget>[
+          _buildRaceDisplay(displayData['Races']),
+          SeasonWDCPage(season: displayData['season']),
+          SeasonWCCPage(season: displayData['season']),
+        ],
+      )
     );
   }
 }
